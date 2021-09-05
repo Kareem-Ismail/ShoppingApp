@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div th:each="product: ${products}">
+    <p>Product Name : <td th:text="${product.code}">code</td></p>
+    <p>Price : <td th:text="${product.price}">price</td></p>
+    </tr>
+<!--<div th:with="product=${products[price]}, price=${products[0]}"></div>-->
+</body>
+</html>
