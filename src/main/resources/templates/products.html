@@ -1,14 +1,20 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
+<button sec:authorize="hasRole('ADMIN')" onclick="location.href='/addProduct'" type="button">Add Products</button>
 <div th:each="product: ${products}">
-    <p>Product Name : <td th:text="${product.code}">code</td></p>
+    <p>Product Name : <td th:text="${product.code}">code</td>
+    <a th:href="@{/deleteProduct(productId=${product.id})}">Delete Product</a>
+    </p>
     <p>Price : <td th:text="${product.price}">price</td></p>
     </tr>
-<!--<div th:with="product=${products[price]}, price=${products[0]}"></div>-->
+</div>
+<div sec:authorize="hasRole('ADMIN')">
+    This content is only shown to administrators.
+</div>
 </body>
 </html>

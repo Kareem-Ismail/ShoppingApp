@@ -30,9 +30,8 @@ public class ProductService {
         return "Successful";
     }
 
-    public String deleteProduct(Long productId) {
+    public void deleteProduct(Long productId) {
         productRepository.deleteById(productId);
-        return "Succeeded";
     }
 
     public List<ProductDTO> getAllProducts() {
