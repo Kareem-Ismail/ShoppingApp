@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>This page is for adding products</title>
+</head>
+<body>
+<form th:action="@{/addProduct}" method="post">
+    <label for="code">Product Name</label>:
+    <input type="text" id="code" name="code" autofocus="autofocus" /> <br />
+    <label for="description">Product Description</label>:
+    <input type="text" id="description" name="description" autofocus="autofocus" /> <br />
+    <label for="price">Price</label>:
+    <input type="text" id="price" name="price" autofocus="autofocus" /> <br />
+    <label for="quantity">Quantity</label>:
+    <input type="text" id="quantity" name="quantity" autofocus="autofocus" /> <br />
+    <label for="categoryId">Category</label>:
+    <input type="text" id="categoryId" name="categoryId" autofocus="autofocus" /> <br />
+    <input type="submit" value="Add Product" />
+</form>
+</body>
+</html>
