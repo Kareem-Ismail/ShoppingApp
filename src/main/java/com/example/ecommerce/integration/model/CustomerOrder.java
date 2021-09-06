@@ -1,6 +1,7 @@
 package com.example.ecommerce.integration.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,11 +17,12 @@ public class CustomerOrder extends BaseModel {
     @Column(name = "order_status")
     private String orderStatus;
     @Column(name = "order_amount")
-    private Integer orderAmount;
+    private Double orderAmount;
+    @JsonBackReference
     @ManyToOne(optional = false, targetEntity = Customer.class)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    @JsonBackReference
     private Customer customer;
-    @OneToMany(targetEntity = CustomerOrderOrderLineItem.class, mappedBy = "customerOrderId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @OneToMany(targetEntity = CustomerOrderOrderLineItem.class, mappedBy = "customerOrder", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<CustomerOrderOrderLineItem> customerOrderOrderLineItemList;
 }

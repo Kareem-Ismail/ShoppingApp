@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface ProductRepository extends CrudRepository<Product, Long> {
     void deleteByCategory(Category category);
     void deleteByCode(String code);
+    Product findProductByCode(String code);
 
 }

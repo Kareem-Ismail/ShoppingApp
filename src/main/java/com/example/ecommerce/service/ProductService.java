@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -20,14 +19,12 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public String addProduct (ProductDTO productDTO) {
+    public String addProduct(ProductDTO productDTO) {
         ModelMapper modelMapper = new ModelMapper();
         Product product = modelMapper.map(productDTO, Product.class);
-        product.setLastUpdate(new Date(System.currentTimeMillis()));
         try {
-        productRepository.save(product);
-        }
-        catch (Exception x) {
+            productRepository.save(product);
+        } catch (Exception x) {
             return x.getMessage();
         }
         return "Successful";
@@ -35,9 +32,8 @@ public class ProductService {
 
     public String deleteProduct(String productName) {
         try {
-        productRepository.deleteByCode(productName);
-        }
-        catch (Exception e) {
+            productRepository.deleteByCode(productName);
+        } catch (Exception e) {
             return "Failed";
         }
         return "Succeeded";
@@ -48,7 +44,8 @@ public class ProductService {
         List<ProductDTO> productDTOList = new ArrayList<>();
         Iterable<Product> all = productRepository.findAll();
         for (Product product : all) {
-            productDTOList.add(modelMapper.map(product, ProductDTO.class));
+            if (product.getQuantity() > 0)
+                productDTOList.add(modelMapper.map(product, ProductDTO.class));
         }
         return productDTOList;
     }

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -21,7 +20,6 @@ public class CategoryService {
     public void addCategory(String categoryName) {
         Category category = new Category();
         category.setName(categoryName);
-        category.setLastUpdate(new Date(System.currentTimeMillis()));
         categoryRepository.save(category);
     }
 

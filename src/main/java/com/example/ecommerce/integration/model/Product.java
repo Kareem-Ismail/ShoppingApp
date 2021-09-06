@@ -15,8 +15,8 @@ public class Product extends BaseModel {
 //    private MultipartFile image;
     private Double price;
     private Integer quantity;
+    @JsonBackReference
     @ManyToOne(optional = false, targetEntity = Category.class)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
-    @JsonBackReference
     private Category category;
 }

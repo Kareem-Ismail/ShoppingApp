@@ -12,5 +12,6 @@ public class BaseModel {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @Column(name = "last_update")
-    private Date lastUpdate;
+    private Date lastUpdate = new Date(System.currentTimeMillis());
+
 }
