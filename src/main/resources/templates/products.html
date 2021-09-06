@@ -13,8 +13,5 @@
     <p>Price : <td th:text="${product.price}">price</td></p>
     </tr>
 </div>
-<div sec:authorize="hasRole('ADMIN')">
-    This content is only shown to administrators.
-</div>
 </body>
 </html>
