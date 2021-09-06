@@ -18,10 +18,9 @@ public class ProductController {
         return productService.addProduct(productDTO);
     }
 
-    @GetMapping("/admin/deleteProduct")
-    public String deleteProduct(@RequestParam String productId) {
-        productService.deleteProduct((long)Integer.parseInt(productId));
-        return "Succeeded";
+    @DeleteMapping("/admin/deleteProduct")
+    public String deleteProduct(@RequestHeader String productName) {
+        return productService.deleteProduct(productName);
     }
 
     @GetMapping("/getAllProducts")

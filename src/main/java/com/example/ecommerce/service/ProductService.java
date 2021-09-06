@@ -33,8 +33,14 @@ public class ProductService {
         return "Successful";
     }
 
-    public void deleteProduct(Long productId) {
-        productRepository.deleteById(productId);
+    public String deleteProduct(String productName) {
+        try {
+        productRepository.deleteByCode(productName);
+        }
+        catch (Exception e) {
+            return "Failed";
+        }
+        return "Succeeded";
     }
 
     public List<ProductDTO> getAllProducts() {
