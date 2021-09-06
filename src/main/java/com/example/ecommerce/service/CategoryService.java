@@ -10,7 +10,10 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class AddCategoryService {
+public class CategoryService {
+
+    @Autowired
+    ProductService productService;
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -28,5 +31,17 @@ public class AddCategoryService {
         for (Category category : all)
             categories.add(category);
         return categories;
+    }
+
+    public String removeCategory(String categoryName) {
+        Category category = categoryRepository.findCategoryByName(categoryName);
+        try {
+            productService.deleteAllProductsWithCategory(category);
+            categoryRepository.deleteById(category.getId());
+        }
+        catch (Exception e){
+            return "Failed to delete the category or category doesn't exist!";
+        }
+        return "Successfully delete the category along with its associated products!";
     }
 }

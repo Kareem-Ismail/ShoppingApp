@@ -13,13 +13,12 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @PostMapping("/addProduct")
-    public String addProduct(@ModelAttribute ProductDTO productDTO) {
-        productService.addProduct(productDTO);
-        return "product added";
+    @PostMapping("/admin/addProduct")
+    public String addProduct(@RequestBody ProductDTO productDTO) {
+        return productService.addProduct(productDTO);
     }
 
-    @GetMapping("/deleteProduct")
+    @GetMapping("/admin/deleteProduct")
     public String deleteProduct(@RequestParam String productId) {
         productService.deleteProduct((long)Integer.parseInt(productId));
         return "Succeeded";

@@ -6,4 +6,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CategoryRepository extends CrudRepository<Category, Long> {
+
+    Category findCategoryByName(String name);
+
+    void deleteById(Long id);
+
 }

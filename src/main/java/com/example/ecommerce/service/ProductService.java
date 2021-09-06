@@ -1,5 +1,6 @@
 package com.example.ecommerce.service;
 
+import com.example.ecommerce.integration.model.Category;
 import com.example.ecommerce.integration.model.Product;
 import com.example.ecommerce.integration.repository.ProductRepository;
 import com.example.ecommerce.service.dto.ProductDTO;
@@ -7,11 +8,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional
 public class ProductService {
 
     @Autowired
@@ -25,7 +28,7 @@ public class ProductService {
         productRepository.save(product);
         }
         catch (Exception x) {
-            return "Category doesn't exist";
+            return x.getMessage();
         }
         return "Successful";
     }
@@ -42,5 +45,9 @@ public class ProductService {
             productDTOList.add(modelMapper.map(product, ProductDTO.class));
         }
         return productDTOList;
+    }
+
+    public void deleteAllProductsWithCategory(Category category) {
+        productRepository.deleteByCategory(category);
     }
 }
