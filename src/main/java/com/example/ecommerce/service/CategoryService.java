@@ -2,6 +2,7 @@ package com.example.ecommerce.service;
 
 import com.example.ecommerce.integration.model.Category;
 import com.example.ecommerce.integration.repository.CategoryRepository;
+import com.example.ecommerce.service.exception.SaveEntityException;
 import com.example.ecommerce.service.enums.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

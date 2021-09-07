@@ -2,6 +2,7 @@ package com.example.ecommerce.service;
 
 import com.example.ecommerce.integration.model.*;
 import com.example.ecommerce.integration.repository.*;
+import com.example.ecommerce.service.exception.SaveEntityException;
 import com.example.ecommerce.service.dto.CartDTO;
 import com.example.ecommerce.service.dto.OrderInfoDTO;
 import com.example.ecommerce.service.dto.ProductDTO;

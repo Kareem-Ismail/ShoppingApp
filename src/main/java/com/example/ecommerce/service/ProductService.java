@@ -3,6 +3,7 @@ package com.example.ecommerce.service;
 import com.example.ecommerce.integration.model.Category;
 import com.example.ecommerce.integration.model.Product;
 import com.example.ecommerce.integration.repository.ProductRepository;
+import com.example.ecommerce.service.exception.SaveEntityException;
 import com.example.ecommerce.service.dto.ProductDTO;
 import com.example.ecommerce.service.enums.ResponseMessage;
 import org.modelmapper.ModelMapper;
