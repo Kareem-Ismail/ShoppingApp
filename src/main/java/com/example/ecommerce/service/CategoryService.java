@@ -2,6 +2,7 @@ package com.example.ecommerce.service;
 
 import com.example.ecommerce.integration.model.Category;
 import com.example.ecommerce.integration.repository.CategoryRepository;
+import com.example.ecommerce.service.enums.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +18,13 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public void addCategory(String categoryName) {
+    public String addCategory(String categoryName) {
         Category category = new Category();
         category.setName(categoryName);
-        categoryRepository.save(category);
+        Category save = categoryRepository.save(category);
+        if (save == null)
+            throw new SaveEntityException(String.format(ResponseMessage.SQL_SAVING_EXCEPTION.getMessage(), Category.class.getSimpleName()));
+        return ResponseMessage.SUCCESS.getMessage();
     }
 
     public List<Category> getAllCategories() {

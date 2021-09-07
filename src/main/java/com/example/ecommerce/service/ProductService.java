@@ -4,6 +4,7 @@ import com.example.ecommerce.integration.model.Category;
 import com.example.ecommerce.integration.model.Product;
 import com.example.ecommerce.integration.repository.ProductRepository;
 import com.example.ecommerce.service.dto.ProductDTO;
+import com.example.ecommerce.service.enums.ResponseMessage;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,21 +23,19 @@ public class ProductService {
     public String addProduct(ProductDTO productDTO) {
         ModelMapper modelMapper = new ModelMapper();
         Product product = modelMapper.map(productDTO, Product.class);
-        try {
-            productRepository.save(product);
-        } catch (Exception x) {
-            return x.getMessage();
-        }
-        return "Successful";
+        Product save = productRepository.save(product);
+        if (save == null)
+            throw new SaveEntityException(String.format(ResponseMessage.SQL_SAVING_EXCEPTION.getMessage(), Product.class.getSimpleName()));
+        return ResponseMessage.SUCCESS.getMessage();
     }
 
     public String deleteProduct(String productName) {
         try {
             productRepository.deleteByCode(productName);
         } catch (Exception e) {
-            return "Failed";
+            return ResponseMessage.FAILED.getMessage();
         }
-        return "Succeeded";
+        return ResponseMessage.SUCCESS.getMessage();
     }
 
     public List<ProductDTO> getAllProducts() {

@@ -6,6 +6,7 @@ import com.example.ecommerce.service.dto.CartDTO;
 import com.example.ecommerce.service.dto.OrderInfoDTO;
 import com.example.ecommerce.service.dto.ProductDTO;
 import com.example.ecommerce.service.enums.OrderStatus;
+import com.example.ecommerce.service.enums.ResponseMessage;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,18 +41,19 @@ public class CartService {
             Customer customer = customerRepository.findCustomerByEmail(customerEmail);
             customerOrder.setCustomer(customer);
             customerOrderRepository.save(customerOrder);
-            return "Success";
+            return ResponseMessage.SUCCESS.getMessage();
         } catch (Exception e) {
             return "Cart creation failed due to " + e.getMessage();
         }
     }
 
-    public void addProductToCart(OrderInfoDTO orderInfoDTO) {
+    public String addProductToCart(OrderInfoDTO orderInfoDTO) {
         Customer customer = customerRepository.findCustomerByEmail(orderInfoDTO.getCustomerEmail());
         Product product = getProduct(orderInfoDTO);
         CustomerOrder customerOrder = prepareCustomerOrder(customer, orderInfoDTO.getQuantity(), product);
         OrderLineItem orderLineItem = prepareOrderLineItem(product, orderInfoDTO.getQuantity());
         submitCustomerOrder(customerOrder, orderLineItem);
+        return ResponseMessage.SUCCESS.getMessage();
     }
 
     public CartDTO viewCartForCustomer(String customerEmail) {
@@ -68,7 +70,7 @@ public class CartService {
             }
             customerOrderRepository.deleteCustomerOrder(customerOrder.getId());
         }
-        return "Success";
+        return ResponseMessage.SUCCESS.getMessage();
     }
 
     private CartDTO getProductsForCustomer(Customer customer) {
@@ -89,7 +91,9 @@ public class CartService {
     private Product getProduct(OrderInfoDTO orderInfoDTO) {
         Product product = productRepository.findProductByCode(orderInfoDTO.getProductName());
         product.setQuantity(product.getQuantity() - orderInfoDTO.getQuantity());
-        productRepository.save(product);
+        Product save = productRepository.save(product);
+        if (save == null)
+            throw new SaveEntityException(String.format(ResponseMessage.SQL_SAVING_EXCEPTION.getMessage(), Product.class.getSimpleName()));
         return product;
     }
 
@@ -105,7 +109,9 @@ public class CartService {
         OrderLineItem orderLineItem = new OrderLineItem();
         orderLineItem.setProduct(product);
         orderLineItem.setQuantity(quantity);
-        orderLineItemRepository.save(orderLineItem);
+        OrderLineItem save = orderLineItemRepository.save(orderLineItem);
+        if (save == null)
+            throw new SaveEntityException(String.format(ResponseMessage.SQL_SAVING_EXCEPTION.getMessage(), OrderLineItem.class.getSimpleName()));
         return orderLineItem;
     }
 
@@ -113,6 +119,8 @@ public class CartService {
         CustomerOrderOrderLineItem customerOrderOrderLineItem = new CustomerOrderOrderLineItem();
         customerOrderOrderLineItem.setCustomerOrder(customerOrder);
         customerOrderOrderLineItem.setLineItems(orderLineItem);
-        customerOrderOrderLineItemRepository.save(customerOrderOrderLineItem);
+        CustomerOrderOrderLineItem save = customerOrderOrderLineItemRepository.save(customerOrderOrderLineItem);
+        if (save == null)
+            throw new SaveEntityException(String.format(ResponseMessage.SQL_SAVING_EXCEPTION.getMessage(), CustomerOrderOrderLineItem.class.getSimpleName()));
     }
 }

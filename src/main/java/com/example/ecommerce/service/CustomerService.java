@@ -4,6 +4,7 @@ package com.example.ecommerce.service;
 import com.example.ecommerce.integration.model.Customer;
 import com.example.ecommerce.integration.repository.CustomerRepository;
 import com.example.ecommerce.service.dto.CustomerInfoDTO;
+import com.example.ecommerce.service.enums.ResponseMessage;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,12 +21,10 @@ public class CustomerService {
     public String addNewCustomer(CustomerInfoDTO customerInfoDto) {
         ModelMapper modelMapper = new ModelMapper();
         Customer customer = modelMapper.map(customerInfoDto, Customer.class);
-        try {
-            customerRepository.save(customer);
-        } catch (Exception e) {
-            return "Customer adding was failed";
-        }
-        return "Customer was added successfully";
+        Customer save = customerRepository.save(customer);
+        if (save == null)
+            throw new SaveEntityException(String.format(ResponseMessage.SQL_SAVING_EXCEPTION.getMessage(), Customer.class.getSimpleName()));
+        return ResponseMessage.SUCCESS.getMessage();
     }
 
     public List<Customer> getAllCustomers() {

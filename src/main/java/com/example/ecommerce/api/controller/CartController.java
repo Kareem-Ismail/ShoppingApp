@@ -19,8 +19,7 @@ public class CartController {
 
     @PostMapping("/addProductToCart")
     public String addProductToCart(@RequestBody OrderInfoDTO orderInfoDTO){
-        cartService.addProductToCart(orderInfoDTO);
-        return "Success";
+        return cartService.addProductToCart(orderInfoDTO);
     }
 
     @GetMapping("/viewCart")
