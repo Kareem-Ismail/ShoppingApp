@@ -2,17 +2,16 @@ package com.example.ecommerce.integration.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Data
 @Entity
 public class Product extends BaseModel {
     private String code;
     private String description;
-//    @Transient
-//    private MultipartFile image;
     private Double price;
     private Integer quantity;
     @JsonBackReference
