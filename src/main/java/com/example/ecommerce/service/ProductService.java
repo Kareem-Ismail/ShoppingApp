@@ -49,7 +49,8 @@ public class ProductService {
         return productDTOList;
     }
 
-    public void deleteAllProductsWithCategory(Category category) {
+    public String deleteAllProductsWithCategory(Category category) {
         productRepository.deleteByCategory(category);
+        return ResponseMessage.SUCCESS.getMessage();
     }
 }

@@ -38,12 +38,12 @@ public class CategoryService {
     public String removeCategory(String categoryName) {
         Category category = categoryRepository.findCategoryByName(categoryName);
         try {
-            productService.deleteAllProductsWithCategory(category);
-            categoryRepository.deleteById(category.getId());
-        }
-        catch (Exception e){
+            String s = productService.deleteAllProductsWithCategory(category);
+            if (s.equals(ResponseMessage.SUCCESS.getMessage()))
+                categoryRepository.deleteById(category.getId());
+        } catch (Exception e) {
             return "Failed to delete the category or category doesn't exist!";
         }
-        return "Successfully delete the category along with its associated products!";
+        return ResponseMessage.SUCCESS.getMessage();
     }
 }
