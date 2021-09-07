@@ -2,6 +2,7 @@ package com.example.ecommerce.service;
 
 import com.example.ecommerce.integration.model.Customer;
 import com.example.ecommerce.integration.repository.CustomerRepository;
+import com.example.ecommerce.service.CustomerService;
 import com.example.ecommerce.service.dto.CustomerInfoDTO;
 import com.example.ecommerce.service.enums.ResponseMessage;
 import org.junit.Assert;

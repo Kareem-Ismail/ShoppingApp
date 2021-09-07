@@ -3,6 +3,8 @@ package com.example.ecommerce.service;
 import com.example.ecommerce.integration.model.Category;
 import com.example.ecommerce.integration.repository.CategoryRepository;
 import com.example.ecommerce.integration.repository.ProductRepository;
+import com.example.ecommerce.service.CategoryService;
+import com.example.ecommerce.service.ProductService;
 import com.example.ecommerce.service.enums.ResponseMessage;
 import liquibase.pro.packaged.C;
 import org.junit.Assert;
